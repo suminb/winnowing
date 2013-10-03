@@ -40,16 +40,22 @@ def hash(kgram):
     """
     :param kgram: e.g., [(0, 'a'), (2, 'd'), (3, 'o'), (5, 'r'), (6, 'u')]
     """
-    import hashlib
-
     kgram = zip(*kgram)
     text = ''.join(kgram[1])
 
+    hs = hash_function(text)
+
+    return (kgram[0][0], hs)
+
+
+def default_hash(text):
+    import hashlib
+    
     hs = hashlib.sha1(text)
     hs = hs.hexdigest()[-4:]
     hs = int(hs, 16)
 
-    return (kgram[0][0], hs)
+    return hs
 
 
 def select_min(window):
@@ -78,3 +84,5 @@ def winnow(text):
     return set(map(select_min, windows))
 
 
+# Specified a hash function. You may override this.
+hash_function = default_hash

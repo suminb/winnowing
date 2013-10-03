@@ -16,3 +16,22 @@ Usage
     
     >>> winnow('run run')
     set([(0, 23942)]) # match found!
+
+
+### Custom Hash Function
+
+You may use your own hash function as demonstrated below.
+
+    def hash_md5(text):
+        import hashlib
+
+        hs = hashlib.md5(text)
+        hs = hs.hexdigest()
+        hs = int(hs, 16)
+
+        return hs
+
+    # Override the hash function
+    winnow.hash_function = hash_md5
+
+    winnow('The cake was a lie')
