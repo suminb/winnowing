@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*- 
+
 __author__ = 'Sumin Byeon'
 
-# DEFINITION 1 (WINNOWING). In each window select the min- imum hash value. If
+# DEFINITION 1 (WINNOWING). In each window select the minimum hash value. If
 # there is more than one hash with the minimum value, select the rightmost
 # occurrence. Now save all selected hashes as the fingerprints of the document.
 
@@ -9,14 +11,16 @@ __author__ = 'Sumin Byeon'
 # a fingerprint.
 
 def sanitize(text):
-    """Removes irrelavant features such as spaces and commas.
-    Currently only support English alphabets.
+    """Removes irrelevant features such as spaces and commas.
 
     :param text: A string of (index, character) tuples.
     """
 
     import re
-    p = re.compile(r'[0-9a-z_-]')
+
+    # NOTE: \p{L} or \p{Letter}: any kind of letter from any language.
+    # http://www.regular-expressions.info/unicode.html
+    p = re.compile(r'\w', re.UNICODE)
 
     def f(c):
         return p.match(c[1]) != None
@@ -36,7 +40,7 @@ def kgrams(text, k=5):
             yield text[i:i+k]
 
 
-def hash(kgram):
+def winnowing_hash(kgram):
     """
     :param kgram: e.g., [(0, 'a'), (2, 'd'), (3, 'o'), (5, 'r'), (6, 'u')]
     """
@@ -54,7 +58,7 @@ def hash(kgram):
 def default_hash(text):
     import hashlib
     
-    hs = hashlib.sha1(text)
+    hs = hashlib.sha1(text.encode('utf-8'))
     hs = hs.hexdigest()[-4:]
     hs = int(hs, 16)
 
@@ -74,13 +78,13 @@ def select_min(window):
     return min(window, key=lambda x: x[1])
 
 
-def winnow(text):
+def winnow(text, k=5):
     n = len(text)
 
     text = zip(xrange(n), text)
     text = sanitize(text)
 
-    hashes = map(lambda x: hash(x), kgrams(text))
+    hashes = map(lambda x: winnowing_hash(x), kgrams(text, k))
 
     windows = map(None, kgrams(hashes, 4))
 
