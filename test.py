@@ -1,5 +1,5 @@
 from testify import *
-from winnow import *
+from winnowing import *
 
 class DefaultTestCase(TestCase):
     def test_fingerprinting(self):
@@ -17,12 +17,12 @@ class DefaultTestCase(TestCase):
 
             return hs
 
-        import winnow
+        import winnowing
 
         # Override the hash function
-        winnow.hash_function = hash_md5
+        winnowing.hash_function = hash_md5
 
-        actual = winnow.winnow('The cake was a lie')
+        actual = winnowing.winnow('The cake was a lie')
         expected = set([(9, 65919358278261454015134408903900174701L),
             (6, 10871086811686999948319704115083909333L),
             (5, 89272493548844644660374857453353035753L),
@@ -31,7 +31,7 @@ class DefaultTestCase(TestCase):
         assert_equal(actual, expected)
 
         # Restore the hash function
-        winnow.hash_function = winnow.default_hash
+        winnowing.hash_function = winnowing.default_hash
 
 if __name__ == "__main__":
     run()
