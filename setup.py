@@ -5,7 +5,7 @@ from distutils.core import setup
 # FIXME: We will stick this shit here for now for the sake of running Travis CI.
 __author__ = 'Sumin Byeon'
 __email__ = 'suminb@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def readme():

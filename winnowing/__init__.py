@@ -41,11 +41,14 @@ def hash(kgram):
     :param kgram: e.g., [(0, 'a'), (2, 'd'), (3, 'o'), (5, 'r'), (6, 'u')]
     """
     kgram = zip(*kgram)
-    text = ''.join(kgram[1])
+
+    # FIXME: What should we do when kgram is shorter than k?
+    text = ''.join(kgram[1]) if len(kgram) > 1 else ''
 
     hs = hash_function(text)
 
-    return (kgram[0][0], hs)
+    # FIXME: What should we do when kgram is shorter than k?
+    return (kgram[0][0] if len(kgram) > 1 else -1, hs)
 
 
 def default_hash(text):
