@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 __author__ = 'Sumin Byeon'
 
@@ -23,7 +23,7 @@ def sanitize(text):
     p = re.compile(r'\w', re.UNICODE)
 
     def f(c):
-        return p.match(c[1]) != None
+        return p.match(c[1]) is not None
 
     return filter(f, map(lambda x: (x[0], x[1].lower()), text))
 
@@ -31,12 +31,13 @@ def sanitize(text):
 def kgrams(text, k=5):
     """Derives k-grams from text."""
 
+    text = list(text)
     n = len(text)
 
     if n < k:
         yield text
     else:
-        for i in xrange(n - k + 1):
+        for i in range(n - k + 1):
             yield text[i:i+k]
 
 
@@ -45,6 +46,7 @@ def winnowing_hash(kgram):
     :param kgram: e.g., [(0, 'a'), (2, 'd'), (3, 'o'), (5, 'r'), (6, 'u')]
     """
     kgram = zip(*kgram)
+    kgram = list(kgram)
 
     # FIXME: What should we do when kgram is shorter than k?
     text = ''.join(kgram[1]) if len(kgram) > 1 else ''
@@ -57,7 +59,7 @@ def winnowing_hash(kgram):
 
 def default_hash(text):
     import hashlib
-    
+
     hs = hashlib.sha1(text.encode('utf-8'))
     hs = hs.hexdigest()[-4:]
     hs = int(hs, 16)
@@ -74,19 +76,19 @@ def select_min(window):
     """
 
     #print window, min(window, key=lambda x: x[1])
-    
+
     return min(window, key=lambda x: x[1])
 
 
 def winnow(text, k=5):
-    n = len(text)
+    n = len(list(text))
 
-    text = zip(xrange(n), text)
+    text = zip(range(n), text)
     text = sanitize(text)
 
     hashes = map(lambda x: winnowing_hash(x), kgrams(text, k))
 
-    windows = map(None, kgrams(hashes, 4))
+    windows = kgrams(hashes, 4)
 
     return set(map(select_min, windows))
 

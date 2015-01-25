@@ -1,7 +1,15 @@
 language: python
 
+install:
+  - pip install -r requirements.txt --use-mirrors
+
 python:
-  - "2.7"
+  - '2.7'
+  - '3.4'
+  - 'pypy'
 
 script:
-  - python test.py
+  - py.test tests --cov winnowing --durations=10
+
+after_success:
+- coveralls
