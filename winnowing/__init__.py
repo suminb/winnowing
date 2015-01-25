@@ -23,7 +23,7 @@ def sanitize(text):
     p = re.compile(r'\w', re.UNICODE)
 
     def f(c):
-        return p.match(c[1]) != None
+        return p.match(c[1]) is not None
 
     return filter(f, map(lambda x: (x[0], x[1].lower()), text))
 
@@ -31,12 +31,13 @@ def sanitize(text):
 def kgrams(text, k=5):
     """Derives k-grams from text."""
 
+    text = list(text)
     n = len(text)
 
     if n < k:
         yield text
     else:
-        for i in xrange(n - k + 1):
+        for i in range(n - k + 1):
             yield text[i:i+k]
 
 
@@ -45,6 +46,7 @@ def winnowing_hash(kgram):
     :param kgram: e.g., [(0, 'a'), (2, 'd'), (3, 'o'), (5, 'r'), (6, 'u')]
     """
     kgram = zip(*kgram)
+    kgram = list(kgram)
 
     # FIXME: What should we do when kgram is shorter than k?
     text = ''.join(kgram[1]) if len(kgram) > 1 else ''
@@ -79,14 +81,14 @@ def select_min(window):
 
 
 def winnow(text, k=5):
-    n = len(text)
+    n = len(list(text))
 
-    text = zip(xrange(n), text)
+    text = zip(range(n), text)
     text = sanitize(text)
 
     hashes = map(lambda x: winnowing_hash(x), kgrams(text, k))
 
-    windows = map(None, kgrams(hashes, 4))
+    windows = kgrams(hashes, 4)
 
     return set(map(select_min, windows))
 
