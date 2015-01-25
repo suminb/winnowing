@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 __author__ = 'Sumin Byeon'
 
@@ -59,7 +59,7 @@ def winnowing_hash(kgram):
 
 def default_hash(text):
     import hashlib
-    
+
     hs = hashlib.sha1(text.encode('utf-8'))
     hs = hs.hexdigest()[-4:]
     hs = int(hs, 16)
@@ -76,7 +76,7 @@ def select_min(window):
     """
 
     #print window, min(window, key=lambda x: x[1])
-    
+
     return min(window, key=lambda x: x[1])
 
 
