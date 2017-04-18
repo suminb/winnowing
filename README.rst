@@ -10,10 +10,28 @@ Original Work
 The original research paper can be found at
 http://dl.acm.org/citation.cfm?id=872770.
 
+Installation
+============
+
+You may install ``winnowing`` package via ``pip`` as follows:
+
+::
+
+    pip install winnowing
+    
+Alternatively, you may also install the package by cloning this repository.
+
+::
+
+    git clone https://github.com/suminb/winnowing.git
+    cd winnowing && python setup.py install
+
 Usage
 =====
 
-::
+.. code:: python
+
+    >>> from winnowing import winnow
 
     >>> winnow('A do run run run, a do run run')
     set([(5, 23942), (14, 2887), (2, 1966), (9, 23942), (20, 1966)])
@@ -33,7 +51,7 @@ Custom Hash Function
 
 You may use your own hash function as demonstrated below.
 
-::
+.. code:: python
 
     def hash_md5(text):
         import hashlib
