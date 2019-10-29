@@ -3,13 +3,22 @@ language: python
 
 install:
   - pip install -r requirements.txt
+  - pip install "black; python_version >= '3.6'"
 
 python:
-  - '2.7'
-  - '3.6'
-  - 'pypy'
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8-dev"
+  - "pypy"
 
 script:
+  - |
+    if [ -x "$(command -v black)" ]; then
+      black --check .
+    fi
   - py.test tests --cov winnowing --durations=10
 
 after_success:

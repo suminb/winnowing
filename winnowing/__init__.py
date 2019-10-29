@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Sumin Byeon'
+__author__ = "Sumin Byeon"
 
 # DEFINITION 1 (WINNOWING). In each window select the minimum hash value. If
 # there is more than one hash with the minimum value, select the rightmost
@@ -9,6 +9,7 @@ __author__ = 'Sumin Byeon'
 # Note the record function must compute the global position using the relative
 # position, min. Saving this position, together with the selected hash, creates
 # a fingerprint.
+
 
 def sanitize(text):
     """Removes irrelevant features such as spaces and commas.
@@ -20,7 +21,7 @@ def sanitize(text):
 
     # NOTE: \p{L} or \p{Letter}: any kind of letter from any language.
     # http://www.regular-expressions.info/unicode.html
-    p = re.compile(r'\w', re.UNICODE)
+    p = re.compile(r"\w", re.UNICODE)
 
     def f(c):
         return p.match(c[1]) is not None
@@ -38,7 +39,7 @@ def kgrams(text, k=5):
         yield text
     else:
         for i in range(n - k + 1):
-            yield text[i:i+k]
+            yield text[i : i + k]
 
 
 def winnowing_hash(kgram):
@@ -49,7 +50,7 @@ def winnowing_hash(kgram):
     kgram = list(kgram)
 
     # FIXME: What should we do when kgram is shorter than k?
-    text = ''.join(kgram[1]) if len(kgram) > 1 else ''
+    text = "".join(kgram[1]) if len(kgram) > 1 else ""
 
     hs = hash_function(text)
 
@@ -60,7 +61,7 @@ def winnowing_hash(kgram):
 def default_hash(text):
     import hashlib
 
-    hs = hashlib.sha1(text.encode('utf-8'))
+    hs = hashlib.sha1(text.encode("utf-8"))
     hs = hs.hexdigest()[-4:]
     hs = int(hs, 16)
 
@@ -75,7 +76,7 @@ def select_min(window):
     :param window: A list of (index, hash) tuples.
     """
 
-    #print window, min(window, key=lambda x: x[1])
+    # print window, min(window, key=lambda x: x[1])
 
     return min(window, key=lambda x: x[1])
 
