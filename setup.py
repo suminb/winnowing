@@ -27,6 +27,6 @@ setup(
     long_description=readme(),
     author=__author__,
     author_email=__email__,
-    url="http://github.com/suminb/winnowing",
+    url="https://github.com/suminb/winnowing",
     packages=["winnowing"],
 )
