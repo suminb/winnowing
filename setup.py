@@ -5,7 +5,7 @@ from distutils.core import setup
 # FIXME: We will stick this shit here for now for the sake of running Travis CI.
 __author__ = "Sumin Byeon"
 __email__ = "suminb@gmail.com"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 def readme():
@@ -27,6 +27,6 @@ setup(
     long_description=readme(),
     author=__author__,
     author_email=__email__,
-    url="http://github.com/suminb/winnowing",
+    url="https://github.com/suminb/winnowing",
     packages=["winnowing"],
 )
