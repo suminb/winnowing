@@ -5,9 +5,13 @@ install:
   - pip install -r requirements.txt
 
 python:
-  - '2.7'
-  - '3.6'
-  - 'pypy'
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8-dev"
+  - "pypy"
 
 script:
   - py.test tests --cov winnowing --durations=10
