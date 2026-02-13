@@ -1,0 +1,7 @@
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = []
+
+# Allow star imports in test files
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["F403", "F405"]
